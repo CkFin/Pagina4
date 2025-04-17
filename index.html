@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código Amor - Vistas HTML Especiales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style id="app-style">
+        :root {
+            --color-primary: #ff3d00;
+            --color-secondary: #5c27fe;
+            --color-accent: #ffde03;
+            --color-dark: #1a1a1a;
+            --color-light: #f5f5f5;
+            --border-thick: 4px solid var(--color-dark);
+            --shadow-neo: 6px 6px 0 var(--color-dark);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            border-bottom: var(--border-thick);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .filter-bar {
+            background-color: var(--color-accent);
+            border: var(--border-thick);
+            box-shadow: var(--shadow-neo);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-button {
+            background-color: white;
+            border: 3px solid var(--color-dark);
+            box-shadow: 4px 4px 0 var(--color-dark);
+            padding: 0.75rem 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--color-dark);
+        }
+
+        .filter-button.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: white;
+            border: 3px solid var(--color-dark);
+            border-radius: 30px;
+            padding: 0.5rem;
+            box-shadow: 4px 4px 0 var(--color-dark);
+        }
+
+        .toggle-label {
+            font-weight: 700;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border: 2px solid var(--color-dark);
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--color-dark);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--color-secondary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            position: relative;
+            background-color: white;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-neo);
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0 var(--color-dark);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: var(--border-thick);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            border: 2px solid var(--color-dark);
+        }
+
+        .tag-categoria {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+        .tag-precio {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .product-description {
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .like-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ccc;
+            transition: all 0.2s;
+        }
+
+        .like-button.liked {
+            color: var(--color-primary);
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .like-count {
+            font-size: 0.8rem;
+            margin-left: 0.25rem;
+        }
+
+        .view-more-button {
+            background-color: var(--color-secondary);
+            color: white;
+            border: 2px solid var(--color-dark);
+            box-shadow: 3px 3px 0 var(--color-dark);
+            padding: 0.5rem 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .view-more-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--color-dark);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            margin: 50px auto;
+            padding: 0;
+            width: 90%;
+            max-width: 1000px;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-neo);
+            animation: modalIn 0.3s;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: 2px solid var(--color-dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        .product-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-detail-header {
+            background-color: var(--color-accent);
+            padding: 2rem;
+            border-bottom: var(--border-thick);
+        }
+
+        .product-detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-detail-tags {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-detail-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-carousel {
+            border: var(--border-thick);
+            overflow: hidden;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .demo-container {
+            border: var(--border-thick);
+            overflow: hidden;
+            height: 300px;
+        }
+
+        .demo-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .product-description-full {
+            margin-top: 2rem;
+            padding: 0 2rem 2rem;
+            line-height: 1.8;
+        }
+
+        .code-container {
+            margin-top: 2rem;
+            padding: 2rem;
+            border-top: var(--border-thick);
+            background-color: var(--color-dark);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .code-title {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .copy-button {
+            background-color: var(--color-accent);
+            color: var(--color-dark);
+            border: 2px solid var(--color-dark);
+            box-shadow: 3px 3px 0 var(--color-dark);
+            padding: 0.5rem 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--color-dark);
+        }
+
+        .code-block {
+            background-color: #1e1e1e;
+            border-radius: 5px;
+            padding: 1rem;
+            font-family: monospace;
+            overflow-x: auto;
+            max-height: 400px;
+            color: #d4d4d4;
+        }
+
+        .buy-button {
+            display: inline-block;
+            margin-top: 2rem;
+            background-color: var(--color-primary);
+            color: white;
+            border: 3px solid var(--color-dark);
+            box-shadow: 5px 5px 0 var(--color-dark);
+            padding: 1rem 2rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .buy-button:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--color-dark);
+        }
+
+        .buy-button i {
+            margin-right: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            border: 3px dashed var(--color-dark);
+            margin: 2rem 0;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--color-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-detail-main {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="javascript:void(0)" class="logo">
+                <i class="fas fa-code"></i>
+                <span>Código Amor</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="filter-bar">
+            <div class="filter-group">
+                <button class="filter-button active" data-category="all">Todos</button>
+                <button class="filter-button" data-category="love-letters">Cartas de Amor</button>
+                <button class="filter-button" data-category="calendars">Calendarios</button>
+                <button class="filter-button" data-category="holidays">Celebraciones</button>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">FREE</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="price-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label">TODOS</span>
+            </div>
+        </section>
+
+        <section id="products-container">
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Cargando productos...
+            </div>
+            <div class="products-grid" id="products-grid"></div>
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <i class="fas fa-search"></i>
+                <p>No se encontraron productos con los filtros seleccionados.</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div id="product-detail" class="product-detail">
+                <!-- Product detail content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for product cards -->
+    <template id="product-card-template">
+        <div class="product-card">
+            <img class="product-image" src="" alt="">
+            <div class="product-info">
+                <div class="product-tags">
+                    <span class="product-tag tag-categoria"></span>
+                    <span class="product-tag tag-precio"></span>
+                </div>
+                <h3 class="product-title"></h3>
+                <p class="product-description"></p>
+                <div class="product-actions">
+                    <button class="like-button">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-count">0</span>
+                    </button>
+                    <button class="view-more-button">Ver más</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script id="app-script">
+        // Fake API endpoint for products
+        const fetchProducts = () => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve([
+                        {
+                            id: 1,
+                            title: "Carta Animada de San Valentín",
+                            category: "love-letters",
+                            price: "paid",
+                            priceAmount: "$15.99",
+                            description: "Carta de amor animada con efectos 3D y mensajes personalizables.",
+                            imageUrl: "https://via.placeholder.com/400x250/FF6B6B/ffffff?text=Carta+Amor+San+Valentin",
+                            likes: 24
+                        },
+                        {
+                            id: 2,
+                            title: "Calendario Interactivo",
+                            category: "calendars",
+                            price: "free",
+                            priceAmount: "GRATIS",
+                            description: "Calendario interactivo con marcaciones especiales para fechas importantes.",
+                            imageUrl: "https://via.placeholder.com/400x250/4ECDC4/ffffff?text=Calendario+Interactivo",
+                            likes: 17
+                        },
+                        {
+                            id: 3,
+                            title: "Día del Trabajador",
+                            category: "holidays",
+                            price: "paid",
+                            priceAmount: "$12.99",
+                            description: "Página temática para celebrar el día del trabajador con animaciones especiales.",
+                            imageUrl: "https://via.placeholder.com/400x250/C7F464/333333?text=Día+del+Trabajador",
+                            likes: 8
+                        },
+                        {
+                            id: 4,
+                            title: "Carta Desplegable",
+                            category: "love-letters",
+                            price: "free",
+                            priceAmount: "GRATIS",
+                            description: "Carta de amor que se despliega con un efecto de acordeón al hacer clic.",
+                            imageUrl: "https://via.placeholder.com/400x250/FF6B6B/ffffff?text=Carta+Desplegable",
+                            likes: 31
+                        },
+                        {
+                            id: 5,
+                            title: "Calendario de Aniversario",
+                            category: "calendars",
+                            price: "paid",
+                            priceAmount: "$19.99",
+                            description: "Calendario personalizado para parejas con cuenta regresiva de aniversario.",
+                            imageUrl: "https://via.placeholder.com/400x250/556270/ffffff?text=Calendario+Aniversario",
+                            likes: 42
+                        },
+                        {
+                            id: 6,
+                            title: "Navidad Especial",
+                            category: "holidays",
+                            price: "free",
+                            priceAmount: "GRATIS",
+                            description: "Tarjeta navideña interactiva con efectos de nieve y música de fondo.",
+                            imageUrl: "https://via.placeholder.com/400x250/D62828/ffffff?text=Navidad+Especial",
+                            likes: 27
+                        }
+                    ]);
+                }, 1000);
+            });
+        };
+
+        // Fake API endpoint for product details
+        const fetchProductDetail = (id) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        id: id,
+                        title: id === 1 ? "Carta Animada de San Valentín" : 
+                               id === 2 ? "Calendario Interactivo" : 
+                               id === 3 ? "Día del Trabajador" :
+                               id === 4 ? "Carta Desplegable" :
+                               id === 5 ? "Calendario de Aniversario" :
+                               "Navidad Especial",
+                        category: id === 1 || id === 4 ? "love-letters" : 
+                                  id === 2 || id === 5 ? "calendars" : 
+                                  "holidays",
+                        price: id === 1 || id === 3 || id === 5 ? "paid" : "free",
+                        priceAmount: id === 1 ? "$15.99" : 
+                                    id === 2 ? "GRATIS" : 
+                                    id === 3 ? "$12.99" :
+                                    id === 4 ? "GRATIS" :
+                                    id === 5 ? "$19.99" :
+                                    "GRATIS",
+                        description: "Esta es una descripción detallada del producto. Incluye todas las características, funcionalidades y beneficios que ofrece. Perfecto para ocasiones especiales, este diseño HTML cuenta con animaciones fluidas, interactividad para el usuario y un diseño responsivo que se adapta a cualquier dispositivo.\n\nTodos los elementos son personalizables, desde colores hasta textos y elementos visuales. Viene con una documentación completa que explica cómo modificar cada aspecto para adaptarlo a tus necesidades específicas.",
+                        imageUrl: id === 1 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Carta+Amor+San+Valentin" : 
+                                id === 2 ? "https://via.placeholder.com/800x500/4ECDC4/ffffff?text=Calendario+Interactivo" : 
+                                id === 3 ? "https://via.placeholder.com/800x500/C7F464/333333?text=Día+del+Trabajador" :
+                                id === 4 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Carta+Desplegable" :
+                                id === 5 ? "https://via.placeholder.com/800x500/556270/ffffff?text=Calendario+Aniversario" :
+                                "https://via.placeholder.com/800x500/D62828/ffffff?text=Navidad+Especial",
+                        carouselImages: [
+                            id === 1 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Vista+Previa+1" : 
+                                id === 2 ? "https://via.placeholder.com/800x500/4ECDC4/ffffff?text=Vista+Previa+1" : 
+                                id === 3 ? "https://via.placeholder.com/800x500/C7F464/333333?text=Vista+Previa+1" :
+                                id === 4 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Vista+Previa+1" :
+                                id === 5 ? "https://via.placeholder.com/800x500/556270/ffffff?text=Vista+Previa+1" :
+                                "https://via.placeholder.com/800x500/D62828/ffffff?text=Vista+Previa+1",
+                            id === 1 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Vista+Previa+2" : 
+                                id === 2 ? "https://via.placeholder.com/800x500/4ECDC4/ffffff?text=Vista+Previa+2" : 
+                                id === 3 ? "https://via.placeholder.com/800x500/C7F464/333333?text=Vista+Previa+2" :
+                                id === 4 ? "https://via.placeholder.com/800x500/FF6B6B/ffffff?text=Vista+Previa+2" :
+                                id === 5 ? "https://via.placeholder.com/800x500/556270/ffffff?text=Vista+Previa+2" :
+                                "https://via.placeholder.com/800x500/D62828/ffffff?text=Vista+Previa+2"
+                        ],
+                        demoUrl: "https://via.placeholder.com/800x600/333333/ffffff?text=DEMO+INTERACTIVA",
+                        sourceCode: id === 2 || id === 4 || id === 6 ? `<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejemplo de Código</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff4081;
+            margin-bottom: 1rem;
+        }
+        .heart {
+            color: #ff4081;
+            font-size: 4rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">❤</div>
+        <h1>Te quiero</h1>
+        <p>Este es un ejemplo simple del código que recibirás.</p>
+    </div>
+</body>
+</html>` : null
+                    });
+                }, 500);
+            });
+        };
+
+        // Main app functionality
+        $(document).ready(function() {
+            let products = [];
+            let activeFilters = {
+                category: 'all',
+                onlyFree: false
+            };
+
+            // Initialize products
+            loadProducts();
+
+            // Event Listeners
+            $('.filter-button').on('click', function() {
+                $('.filter-button').removeClass('active');
+                $(this).addClass('active');
+                activeFilters.category = $(this).data('category');
+                filterProducts();
+            });
+
+            $('#price-toggle').on('change', function() {
+                activeFilters.onlyFree = !$(this).is(':checked');
+                filterProducts();
+            });
+
+            // Close modal when clicking the X or outside the modal content
+            $('#close-modal').on('click', function() {
+                $('#product-modal').hide();
+            });
+
+            $(window).on('click', function(event) {
+                if ($(event.target).is('#product-modal')) {
+                    $('#product-modal').hide();
+                }
+            });
+
+            // Load all products
+            function loadProducts() {
+                $('#loading').show();
+                $('#products-grid').hide();
+                $('#empty-state').hide();
+
+                fetchProducts()
+                    .then(data => {
+                        products = data;
+                        renderProducts();
+                        $('#loading').hide();
+                        $('#products-grid').show();
+                    })
+                    .catch(error => {
+                        console.error('Error loading products:', error);
+                        $('#loading').hide();
+                        $('#empty-state').text('Error al cargar productos. Inténtalo de nuevo más tarde.').show();
+                    });
+            }
+
+            // Render products based on current filters
+            function renderProducts() {
+                const grid = $('#products-grid');
+                grid.empty();
+
+                const filteredProducts = products.filter(product => {
+                    if (activeFilters.category !== 'all' && product.category !== activeFilters.category) {
+                        return false;
+                    }
+                    if (activeFilters.onlyFree && product.price !== 'free') {
+                        return false;
+                    }
+                    return true;
+                });
+
+                if (filteredProducts.length === 0) {
+                    $('#empty-state').show();
+                    return;
+                }
+
+                $('#empty-state').hide();
+
+                filteredProducts.forEach(product => {
+                    const template = document.getElementById('product-card-template');
+                    const clone = document.importNode(template.content, true);
+                    
+                    // Fill in the template
+                    clone.querySelector('.product-image').src = product.imageUrl;
+                    clone.querySelector('.product-image').alt = product.title;
+                    clone.querySelector('.tag-categoria').textContent = getCategoryName(product.category);
+                    clone.querySelector('.tag-precio').textContent = product.priceAmount;
+                    clone.querySelector('.product-title').textContent = product.title;
+                    clone.querySelector('.product-description').textContent = product.description;
+                    clone.querySelector('.like-count').textContent = product.likes;
+                    
+                    // Check if product is liked from localStorage
+                    const isLiked = isProductLiked(product.id);
+                    if (isLiked) {
+                        clone.querySelector('.like-button').classList.add('liked');
+                    }
+                    
+                    // Add event listeners
+                    const likeButton = clone.querySelector('.like-button');
+                    likeButton.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleLike(product.id, likeButton);
+                    });
+                    
+                    const viewMoreButton = clone.querySelector('.view-more-button');
+                    viewMoreButton.addEventListener('click', () => {
+                        openProductDetail(product.id);
+                    });
+                    
+                    grid.append(clone);
+                });
+            }
+
+            // Filter products based on active filters
+            function filterProducts() {
+                renderProducts();
+            }
+
+            // Get readable category name
+            function getCategoryName(category) {
+                switch(category) {
+                    case 'love-letters':
+                        return 'Cartas de Amor';
+                    case 'calendars':
+                        return 'Calendarios';
+                    case 'holidays':
+                        return 'Celebraciones';
+                    default:
+                        return 'Otro';
+                }
+            }
+
+            // Check if a product is liked (stored in localStorage)
+            function isProductLiked(productId) {
+                const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
+                return likedProducts.includes(productId);
+            }
+
+            // Toggle like status for a product
+            function toggleLike(productId, buttonElement) {
+                const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
+                const productIndex = products.findIndex(p => p.id === productId);
+                
+                if (isProductLiked(productId)) {
+                    // Unlike
+                    const index = likedProducts.indexOf(productId);
+                    likedProducts.splice(index, 1);
+                    buttonElement.classList.remove('liked');
+                    products[productIndex].likes--;
+                } else {
+                    // Like
+                    likedProducts.push(productId);
+                    buttonElement.classList.add('liked');
+                    buttonElement.animate([
+                        { transform: 'scale(1)' },
+                        { transform: 'scale(1.2)' },
+                        { transform: 'scale(1)' }
+                    ], {
+                        duration: 500
+                    });
+                    products[productIndex].likes++;
+                }
+                
+                localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+                buttonElement.querySelector('.like-count').textContent = products[productIndex].likes;
+            }
+
+            // Open product detail modal
+            function openProductDetail(productId) {
+                $('#product-modal').show();
+                
+                const detailContainer = $('#product-detail');
+                detailContainer.html(`
+                    <div style="text-align: center; padding: 50px;">
+                        <i class="fas fa-spinner fa-spin fa-3x"></i>
+                        <p>Cargando detalles del producto...</p>
+                    </div>
+                `);
+                
+                fetchProductDetail(productId)
+                    .then(product => {
+                        // Build detail view
+                        const detailHTML = `
+                            <div class="product-detail-header">
+                                <h2 class="product-detail-title">${product.title}</h2>
+                                <div class="product-detail-tags">
+                                    <span class="product-tag tag-categoria">${getCategoryName(product.category)}</span>
+                                    <span class="product-tag tag-precio">${product.priceAmount}</span>
+                                </div>
+                            </div>
+                            <div class="product-detail-main">
+                                <div class="product-carousel">
+                                    <img class="carousel-image" src="${product.carouselImages[0]}" alt="${product.title}">
+                                </div>
+                                <div class="demo-container">
+                                    <iframe class="demo-iframe" src="${product.demoUrl}" title="Demo Interactiva"></iframe>
+                                </div>
+                            </div>
+                            <div class="product-description-full">
+                                <h3>Descripción</h3>
+                                <p>${product.description}</p>
+                                ${product.price === 'paid' ? 
+                                `<a href="https://wa.me/1234567890?text=Me%20interesa%20comprar:%20${encodeURIComponent(product.title)}" class="buy-button" target="_blank">
+                                    <i class="fab fa-whatsapp"></i> Comprar vía WhatsApp
+                                </a>` : ''}
+                            </div>
+                            ${product.price === 'free' && product.sourceCode ?
+                            `<div class="code-container">
+                                <div class="code-header">
+                                    <h3 class="code-title">Código Fuente</h3>
+                                    <button class="copy-button" id="copy-code-btn">
+                                        <i class="fas fa-copy"></i> Copiar Código
+                                    </button>
+                                </div>
+                                <pre class="code-block"><code class="language-html">${escapeHTML(product.sourceCode)}</code></pre>
+                            </div>` : ''}
+                        `;
+                        
+                        detailContainer.html(detailHTML);
+                        
+                        // Initialize code highlighting
+                        if (product.price === 'free' && product.sourceCode) {
+                            Prism.highlightAll();
+                            
+                            // Implement copy to clipboard
+                            $('#copy-code-btn').on('click', function() {
+                                const codeText = product.sourceCode;
+                                navigator.clipboard.writeText(codeText).then(() => {
+                                    const originalText = $(this).html();
+                                    $(this).html('<i class="fas fa-check"></i> ¡Copiado!');
+                                    setTimeout(() => {
+                                        $(this).html(originalText);
+                                    }, 2000);
+                                }).catch(err => {
+                                    console.error('Error al copiar: ', err);
+                                });
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading product details:', error);
+                        detailContainer.html(`
+                            <div style="text-align: center; padding: 50px;">
+                                <i class="fas fa-exclamation-triangle fa-3x" style="color: var(--color-primary);"></i>
+                                <p>Error al cargar los detalles del producto. Inténtalo de nuevo más tarde.</p>
+                            </div>
+                        `);
+                    });
+            }
+
+            // Helper function to escape HTML special characters
+            function escapeHTML(str) {
+                return str
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+        });
+    </script>
+</body>
+</html>
